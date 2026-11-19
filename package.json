@@ -1,0 +1,75 @@
+{
+  "name": "@ai2h/astro-intake",
+  "description": "Astro integration for the Intake feedback drawer",
+  "version": "0.2.0",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "type": "module",
+  "files": [
+    "build"
+  ],
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./build/index.d.ts",
+      "default": "./build/index.js"
+    },
+    "./server": {
+      "types": "./build/src/server.d.ts",
+      "default": "./build/src/server.js"
+    },
+    "./proxy": "./build/src/proxy.js",
+    "./drawer": "./build/resources/client.js",
+    "./IntakeDrawer.astro": "./build/components/IntakeDrawer.astro"
+  },
+  "scripts": {
+    "copy:templates": "copyfiles -u 0 \"resources/**/*\" \"components/**/*\" build",
+    "typecheck": "tsc --noEmit",
+    "compile": "tsdown && tsc --emitDeclarationOnly --declaration",
+    "postcompile": "npm run copy:templates",
+    "build": "npm run compile"
+  },
+  "keywords": [
+    "astro",
+    "astro-integration",
+    "withastro",
+    "intake",
+    "ai2h"
+  ],
+  "author": "ai2h",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^22.15.0",
+    "astro": "^7.4.4",
+    "copyfiles": "^2.4.1",
+    "tsdown": "^0.12.0",
+    "typescript": "^5.9.3"
+  },
+  "peerDependencies": {
+    "astro": "^7.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "tsdown": {
+    "entry": [
+      "./index.ts",
+      "./src/server.ts",
+      "./src/proxy.ts"
+    ],
+    "outDir": "./build",
+    "clean": true,
+    "format": "esm",
+    "fixedExtension": false,
+    "dts": false,
+    "treeshake": false,
+    "sourcemaps": false,
+    "target": "esnext",
+    "external": [
+      "astro",
+      "virtual:ai2h-intake/server"
+    ]
+  }
+}
